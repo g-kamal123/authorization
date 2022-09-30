@@ -35,7 +35,7 @@ function Grid1() {
     // getUsersonConstraint(page, count, allvalues);
   };
   const countChange = (value) => {
-    getUsersonConstraint(page, count, allvalues);
+    // getUsersonConstraint(page, count, allvalues);
     setCount(value);
   };
   // console.log(page);
@@ -138,7 +138,7 @@ function Grid1() {
     return () => {
       clearTimeout(timer);
     };
-  }, [allvalues]);
+  }, [page,count,allvalues]);
 
   return (
     <Page title="Data Grid...">
@@ -161,13 +161,13 @@ function Grid1() {
             hasPrevious={page > 1}
             onPrevious={() => {
               if (page > 1) {
-                getUsersonConstraint(page - 1, count, allvalues);
+                // getUsersonConstraint(page - 1, count, allvalues);
                 setPage(page - 1);
               }
             }}
-            hasNext
+            hasNext={(page*Number(count)<total)}
             onNext={() => {
-              getUsersonConstraint(page + 1, count, allvalues);
+              // getUsersonConstraint(page + 1, count, allvalues);
               setPage(page + 1);
             }}
           />
