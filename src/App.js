@@ -1,7 +1,16 @@
+import {
+  Button,
+  Card,
+  Form,
+  FormLayout,
+  Page,
+  TextField,
+} from "@shopify/polaris";
 import { useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
-import Welocme from "./Welocme";
+import Grid1 from "./components/Grid1";
+import Welocme from "./components/Welcome";
 
 function App() {
   const nav = useNavigate();
@@ -22,7 +31,7 @@ function App() {
     return ftch.json();
   };
   const formHandler = async (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     const inp = { username: username, password: password };
     const dt = await getData(inp);
     if (dt.success) {
@@ -36,32 +45,49 @@ function App() {
     }
   };
   return (
-    <div className="App">
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <form onSubmit={formHandler}>
-                <input
-                  value={username}
-                  onChange={(event) => setUsername(event.target.value)}
-                  placeholder="username"
-                />
-                <input
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                  placeholder="password"
-                />
-                <button type="submit">Login</button>
-              </form>
-              {error && <h2 style={{ color: "red" }}>Invalid credentials</h2>}
-            </>
-          }
-        />
-        <Route path="/welcome" element={<Welocme />} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <>
+            <Page title="Login">
+              <Card sectioned>
+                {error && <h2 style={{ color: "red" }}>Invalid credentials</h2>}
+                <Form onSubmit={formHandler} noValidate>
+                  <FormLayout>
+                    
+                    <TextField
+                      label="Username"
+                      helpText="We will use this username to authenticate you"
+                      value={username}
+                      requiredIndicator
+                      onChange={(event) => {
+                        // console.log(event)
+                        setUsername(event);
+                      }}
+                      placeholder="username"
+                    />
+                    <TextField
+                      label="Password"
+                      helpText="We will use this password to authenticate you"
+                      value={password}
+                      requiredIndicator
+                      onChange={(event) => setPassword(event)}
+                      placeholder="password"
+                    />
+                    <Button primary submit>
+                      Login
+                    </Button>
+                  </FormLayout>
+                </Form>
+              </Card>
+            </Page>
+          </>
+        }
+      />
+      <Route path="/welcome" element={<Welocme />} />
+      <Route path="/grid" element={<Grid1 />}/>
+    </Routes>
   );
 }
 
